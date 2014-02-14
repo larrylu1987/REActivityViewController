@@ -59,7 +59,11 @@
             
             if (text && url)
                 messageComposeViewController.body = [NSString stringWithFormat:@"%@ %@", text, url.absoluteString];
-            
+                
+            if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 && img){
+                NSData *imgData =  UIImagePNGRepresentation(img);
+                [messageComposeViewController addAttachmentData:imgData typeIdentifier:@"public.data" filename:@"cover.png"];
+            }
             [activityViewController.presentingController presentViewController:messageComposeViewController animated:YES completion:nil];
         }];
     };

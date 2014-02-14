@@ -43,6 +43,7 @@
         NSDictionary *userInfo = weakSelf.userInfo ? weakSelf.userInfo : activityViewController.userInfo;
         NSString *text = [userInfo objectForKey:@"text"];
         NSURL *url = [userInfo objectForKey:@"url"];
+        UIImage *img = [userInfo objectForKey:@"image"];
         [activityViewController dismissViewControllerAnimated:YES completion:^{
             if (![MFMessageComposeViewController canSendText])
                 return;
@@ -59,11 +60,11 @@
             
             if (text && url)
                 messageComposeViewController.body = [NSString stringWithFormat:@"%@ %@", text, url.absoluteString];
-                
             if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 && img){
                 NSData *imgData =  UIImagePNGRepresentation(img);
                 [messageComposeViewController addAttachmentData:imgData typeIdentifier:@"public.data" filename:@"cover.png"];
             }
+
             [activityViewController.presentingController presentViewController:messageComposeViewController animated:YES completion:nil];
         }];
     };

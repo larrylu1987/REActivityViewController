@@ -54,19 +54,21 @@
 
 - (void)shareFromViewController:(UIViewController *)viewController text:(NSString *)text url:(NSURL *)url image:(UIImage *)image
 {
-    DEFacebookComposeViewController *facebookViewComposer = [[DEFacebookComposeViewController alloc] init];
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    else
-        [UIApplication sharedApplication].delegate.window.rootViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    // DEFacebookComposeViewController *facebookViewComposer = [[DEFacebookComposeViewController alloc] init];
+    // if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    //     viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    // else
+    //     [UIApplication sharedApplication].delegate.window.rootViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
-    if (text)
-        [facebookViewComposer setInitialText:text];
-    if (url)
-        [facebookViewComposer addURL:url];
-    if (image)
-        [facebookViewComposer addImage:image];
-    [viewController presentViewController:facebookViewComposer animated:YES completion:nil];
+    // if (text)
+    //     [facebookViewComposer setInitialText:text];
+    // if (url)
+    //     [facebookViewComposer addURL:url];
+    // if (image)
+    //     [facebookViewComposer addImage:image];
+    // [viewController presentViewController:facebookViewComposer animated:YES completion:nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:text, @"title",url.absoluteString,@"url",image,@"img",imgUrl,@"imgUrl", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"socialShareFacebookShare" object:dic];
 }
 
 @end

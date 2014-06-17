@@ -26,6 +26,7 @@
 #import "REMessageActivity.h"
 #import "REActivityViewController.h"
 #import "REActivityDelegateObject.h"
+#import "sys/sysctl.h"
 
 @implementation REMessageActivity
 

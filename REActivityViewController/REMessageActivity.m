@@ -60,16 +60,27 @@
             
             if (text && url)
                 messageComposeViewController.body = [NSString stringWithFormat:@"%@ %@", text, url.absoluteString];
-            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone  && [MFMessageComposeViewController canSendAttachments] && img){
+            if(![self isiPad] && [MFMessageComposeViewController canSendAttachments] && img){
                 NSData *imgData =  UIImagePNGRepresentation(img);
                 [messageComposeViewController addAttachmentData:imgData typeIdentifier:@"public.data" filename:@"cover.png"];
             }
-
+            
             [activityViewController.presentingController presentViewController:messageComposeViewController animated:YES completion:nil];
         }];
     };
     
     return self;
+}
+
+- (BOOL)isiPad
+{
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithUTF8String:machine];
+    free(machine);
+    return [[platform lowercaseString] componentsSeparatedByString:@"ipad"].count > 1;
 }
 
 @end

@@ -61,16 +61,25 @@
             
             if (text && url)
                 messageComposeViewController.body = [NSString stringWithFormat:@"%@ %@", text, url.absoluteString];
-            if(![self isiPad] && [MFMessageComposeViewController canSendAttachments] && img){
+            
+            if(![self isiPad] && [self canSendAttachment] && img){
                 NSData *imgData =  UIImagePNGRepresentation(img);
                 [messageComposeViewController addAttachmentData:imgData typeIdentifier:@"public.data" filename:@"cover.png"];
             }
-            
             [activityViewController.presentingController presentViewController:messageComposeViewController animated:YES completion:nil];
         }];
     };
     
     return self;
+}
+
+- (BOOL)canSendAttachment
+{
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        return [MFMessageComposeViewController canSendAttachments];
+    }else{
+        return NO;
+    }
 }
 
 - (BOOL)isiPad
